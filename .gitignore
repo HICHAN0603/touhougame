@@ -1,0 +1,10 @@
+# Temporary editor output and local game saves
+/~TEMP/
+/Save/
+/Save*.rxdata
+
+# Windows-generated files
+Thumbs.db
+Desktop.ini
+*.tmp
+*.log

@@ -1,0 +1,23 @@
+Dimensions: 192 x 192
+Grid: 4 columns x 4 rows
+Cell: 48 x 48
+Original palette: 30 colors
+Alpha: binary transparent or opaque
+Row 1 Col 1: (13,8) - (41,45), pixels 667
+Row 1 Col 2: (13,9) - (42,45), pixels 665
+Row 1 Col 3: (13,8) - (41,45), pixels 667
+Row 1 Col 4: (12,9) - (42,45), pixels 661
+Row 2 Col 1: (12,8) - (47,45), pixels 672
+Row 2 Col 2: (12,8) - (47,45), pixels 680
+Row 2 Col 3: (12,8) - (47,45), pixels 672
+Row 2 Col 4: (12,8) - (43,45), pixels 700
+Row 3 Col 1: (3,8) - (39,45), pixels 717
+Row 3 Col 2: (4,9) - (39,45), pixels 694
+Row 3 Col 3: (3,8) - (39,45), pixels 717
+Row 3 Col 4: (6,11) - (39,45), pixels 687
+Row 4 Col 1: (8,5) - (36,45), pixels 677
+Row 4 Col 2: (9,5) - (36,45), pixels 673
+Row 4 Col 3: (8,5) - (36,45), pixels 677
+Row 4 Col 4: (7,5) - (36,45), pixels 686
+Animation: 4 frames; all sprite colors exactly preserved.
+

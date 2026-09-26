@@ -1,0 +1,16 @@
+Changed pixels: 1312
+Changes outside lower running strips: 0
+Upper body changes: 0
+Direction 0: phase 2/4 lower-body differences=117
+Direction 1: phase 2/4 lower-body differences=184
+Direction 2: phase 2/4 lower-body differences=177
+Direction 3: phase 2/4 lower-body differences=133
+
+正面 第2列：画面左鞋底 y=43，右鞋底 y=39
+正面 第4列：画面左鞋底 y=41，右鞋底 y=43
+左侧 第2列：画面左鞋底 y=44，右鞋底 y=39
+左侧 第4列：画面左鞋底 y=40，右鞋底 y=43
+右侧 第2列：画面左鞋底 y=39，右鞋底 y=44
+右侧 第4列：画面左鞋底 y=43，右鞋底 y=40
+背面 第2列：画面左鞋底 y=37，右鞋底 y=43
+背面 第4列：画面左鞋底 y=43，右鞋底 y=38

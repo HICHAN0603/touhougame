@@ -1,0 +1,20 @@
+Use case: identity-preserve.
+Edit target: the single attached Komachi RPG Maker XP sprite sheet, displayed at integer3x enlargement. Logical native canvas192x192, 4x4 grid of48x48cells. Original32x48sprites were only centered with8px side padding; the character artwork was NOT enlarged. This is the exact source identity, proportions and pixel-scale reference.
+
+Request: only columns TWO and FOUR become natural RUNNING action phases. Show raised knees/feet, bent trailing leg, bent elbows swinging opposite the legs, and slight forward torso lean. Keep the source expression. Hair twin tails and skirt may follow through modestly with the movement.
+
+Protected columns ONE and THREE: preserve each original frame unchanged in pose, hair, face, clothing and anatomy scale. They will be directly copied from original in final assembly. New run frames must blend with these unchanged original contact poses.
+
+Alternation is important:
+- Column2 and column4 must use opposite anatomical leading legs and opposite arm swings, not the same lifted foot with a different stride.
+- In FRONT and BACK rows, make the alternating leg position unmistakable at tiny pixel scale. BACK row specifically: col2 has its prominent extended shoe under the screenRIGHT hip; col4 has its prominent extended shoe under the screenLEFT hip, with the other leg lifted/bent behind. Do not duplicate the same right-foot pose in both.
+- In side rows, swap which near/far leg is the forward lifted knee and which is trailing bent leg, with coherent shading/overlap. Keep facing the correct direction; do not mirror entire character.
+Use organic cohesive animation, never mechanically pasted limbs.
+
+Identity invariants: original red hair, bangs and twin side tails, original tiny gold/yellow hair ties; same eye colors, skin and calm face. Same short white/pale pink sleeve pieces and white front panels, navy/blue-violet collar/waist/skirt with original tiny gold waist detail, pale layered hem, original small gray/purple shoes. Preserve the exact source costume rather than inventing Komachi's other outfits. No scythe, props, hats, wings, new ribbons or facial changes. Retain original hair length; modest tail bounce only.
+
+Native size: full source standing character about44px tall and23px wide. Keep original head, torso, hands and shoe dimensions and pixel density; never enlarge anatomy to fill48pxwidecells.192x192adds transparent motion room only. Running poses may naturally change occupied width/height, while head size and body proportions stay source scale. One logical pixel=3displaypixels in the reference.
+
+Layout: exactly16 complete frames in4columns x4rows. Directions down/front, left, right, up/back. Original columns1&3 contact poses, opposing raised-leg run phases in2&4. Foot baseline localy45, consistent body anchor and scale, subtle natural bob, all hair and limbs inside cells. No clipping, neighboring overlap, text, labels or gridlines.
+
+Style: authentic tiny RPG Maker XP pixel sprites, original shading and limited palette, crisp hard pixel clusters, organic first-version natural motion. Actual transparent background; no black/white/magenta fill, antialiasing, blur, gradients, smooth modern illustration or external shadows. Output one square sprite sheet only.

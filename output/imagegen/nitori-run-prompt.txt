@@ -1,0 +1,36 @@
+Use case: identity-preserve.
+Edit target: the single attached Nitori RPG Maker XP sprite sheet at integer3x nearest-neighbor viewing scale. Logical/native canvas192x192,4x4grid,eachcell48x48. The original32x48 artwork was merely centered with8pxsidepadding. The character was NOT enlarged. This image is the exact identity, anatomy-size and pixel-density reference.
+
+Request: modify only columns TWO and FOUR into clear natural RUNNING phases with raised knee/foot, bent trailing leg, bent elbows swinging opposite the legs, slight forward torso lean. Preserve original facial expression. Cap, short side hair and backpack may have modest natural follow-through.
+
+Protected columns ONE and THREE: each original frame must stay unchanged in pose, face, clothes, hat, hair, backpack and anatomy scale. They will be copied directly from the original during final assembly. Generated running frames must match those unchanged original contact poses and source dimensions.
+
+Leg alternation is essential. Column2 and column4 use opposite anatomical leading legs and opposite arm swings, never repeat the same raised foot:
+- Front and back views must visibly alternate the prominent left/right leg. BACK row: column2 prominent extended/lowered shoe under the screenRIGHT hip; column4 prominent extended/lowered shoe under the screenLEFT hip, other leg tucked/bent behind. Do not duplicate one-sided raised feet.
+- Side rows alternate which near/far leg leads and which trails, with coherent shading/overlap and opposite arm positions. Maintain facing direction, do not mirror the entire character.
+Keep the run organic and coordinated, not mechanical pasted limbs.
+
+Identity invariants: same short blue hair, side tufts/ponytails, bangs and small red hair accents; same small green cap with original tiny pale/yellow mark; original eyes, skin and calm expression. Same blue short-sleeved outfit/dress with original white/pink collar/neck detail and all tiny trim/pocket details, original small blue shoes. Keep the original bulky green backpack in side/back views with original shape, shading, straps and tiny flap detail, naturally carried on her back and obscured in front view. Do not remove or enlarge the backpack. No hats beyond the original cap, new tools, weapons, props, wings, long hair or extra accessories.
+
+Native scale (critical): original standing character cap-to-shoe about43px tall and23px across. Preserve the source head, cap, torso, hands, footwear and backpack size.192x192 is more EMPTY TRANSPARENT SPACE for motion, not enlarged anatomy. Running pose may naturally change occupied height/width; never enlarge the character to fill48pxwidecells. Source proportions and pixel density unchanged. One logical pixel=3displaypixels in the reference.
+
+Layout: exactly16 completeframes,4columns x4rows; direction rows down/front,left,right,up/back. Original contact poses in columns1&3, complementary raised-leg run phases in2&4. Foot baseline around localy45, consistent horizontal body anchor and source scale, only subtle natural bob. Complete cap, hair, backpack and limbs inside eachcell, no clipping or neighboring overlap.
+
+Style: authentic tiny RPG Maker XP pixel sprites, original limited palette and shading, crisp hard pixel clusters, first-version natural running treatment. Actual transparent background. No white/black/magenta fill, text, borders, labels, gridlines, antialiasing, blur, smooth modern illustration, gradients or outside shadows. Output one square sprite sheet only.
+
+TARGETED REFINEMENT:
+Edit the last attached Nitori pixel sprite sheet. It is the current192x192logical sprite sheet shown at3x on a warm preview backdrop.
+Correct ONLY TWO CELLS: row2,column4 (left-facing run) and row3,column4 (right-facing run). All14other cells must remain unchanged.
+Problem: these two fourth-column side poses currently repeat the second-column forward leg silhouette. They must become the clear OPPOSITE LEG/ARM PHASE.
+
+LEFT-FACING row2,col4:
+The camera-near leg is now the TRAILING leg, extending backward toward screenRIGHT to its shoe below the backpack at localy45. The far leg is raised FORWARD toward screenLEFT, knee lifted in front of the skirt, foot bent upward and higher at aboutlocaly39-41; shade it as the far leg using original colors. Make the backward trailing shoe clearly on the RIGHT of the forward raised shoe.
+The camera-near arm swings BACK toward screenRIGHT beside the backpack, elbow bent and hand behind the waist. The far arm swings forward toward screenLEFT.
+
+RIGHT-FACING row3,col4:
+The camera-near leg TRAILS backward toward screenLEFT to its shoe below the backpack atlocaly45. The far leg is raised FORWARD toward screenRIGHT, knee in front of skirt, bent foot higher aroundlocaly39-41. The trailing shoe clearly lies LEFT of the forward raised shoe.
+The camera-near arm swings BACK toward screenLEFT near backpack, elbow bent and hand behind waist. Far arm swings forward toward screenRIGHT.
+
+Keep coordinated natural RUNNING and slight forward body lean. Do not mirror entire character. Keep the current head, cap, blue hair, calm face, torso scale, blue outfit, small blue shoes and green backpack exactly the same identity/size; only these two full running poses change. Source anatomy scale stays tiny: cap-to-shoe about43px, logicalcells48x48. No new props or added detail.
+Protect original columns1&3, and front/back run frames as currently shown. Preserve full4x4 layout and anchors.
+Authentic RPG Maker XP tiny pixel sprites, original crisp limited palette and shading. Actual transparent background replacing the warm preview only. No grid, text, blur, smooth illustration or artificial motion lines. Output the full square sprite sheet.

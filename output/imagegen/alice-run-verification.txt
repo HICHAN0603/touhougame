@@ -1,0 +1,22 @@
+Dimensions: 192 x 192
+Grid: 4 columns x 4 rows
+Cell: 48 x 48
+Palette: original character's 33 colors
+Alpha: binary transparent or opaque
+Row 1 Col 1: bounds (13,6) - (33,45), pixels 647
+Row 1 Col 2: bounds (13,5) - (33,45), pixels 644
+Row 1 Col 3: bounds (13,6) - (33,45), pixels 647
+Row 1 Col 4: bounds (14,5) - (33,45), pixels 641
+Row 2 Col 1: bounds (13,6) - (33,45), pixels 563
+Row 2 Col 2: bounds (12,5) - (33,45), pixels 587
+Row 2 Col 3: bounds (13,6) - (33,45), pixels 563
+Row 2 Col 4: bounds (12,5) - (35,45), pixels 584
+Row 3 Col 1: bounds (13,5) - (33,45), pixels 586
+Row 3 Col 2: bounds (11,5) - (33,45), pixels 614
+Row 3 Col 3: bounds (13,5) - (33,45), pixels 586
+Row 3 Col 4: bounds (9,5) - (34,45), pixels 613
+Row 4 Col 1: bounds (13,4) - (34,45), pixels 677
+Row 4 Col 2: bounds (13,4) - (34,45), pixels 633
+Row 4 Col 3: bounds (13,4) - (34,45), pixels 677
+Row 4 Col 4: bounds (13,4) - (33,45), pixels 624
+

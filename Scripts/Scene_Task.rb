@@ -13,6 +13,7 @@ module TaskJournal
   MARKS = {:main => ["○", "●"], :side => ["△", "▲"], :special => ["☆", "★"]}
   LEGACY_IDS = {2 => 2, 3 => 14, 4 => 17, 5 => 18, 6 => 26, 7 => 901}
   POPUP_FRAMES = 60
+  POPUP_SLIDE_FRAMES = 12
 
   def self.utf8(text)
     return text.to_s.unpack("U*").pack("U*")
@@ -1420,49 +1421,80 @@ end
 class Sprite_TaskNotice
   def initialize
     @sprite = Sprite.new
-    @sprite.x = 290; @sprite.y = 18; @sprite.z = 8500
-    @sprite.bitmap = Bitmap.new(330,114)
+    @background = RPG::Cache.windowskin("task_back")
+    @icon = RPG::Cache.icon("menu_task")
+    @width = @background.width
+    @hidden_x = 640
+    @rest_x = @hidden_x - @width - 10
+    @sprite.x = @hidden_x; @sprite.y = 18; @sprite.z = 8500
+    @sprite.bitmap = Bitmap.new(@width, @background.height)
+    draw_notice
     @sprite.visible = false
-    @frames = 0
+    @phase = :idle
+    @phase_frame = 0
   end
 
   def update
-    blocked = !$scene.is_a?(Scene_Map) || $game_temp.message_window_showing ||
-      $game_temp.player_transferring || $game_system.map_interpreter.running?
-    display = $scene.scene_name_display if $scene.respond_to?(:scene_name_display)
-    blocked = true if display && display.remaining_frames > 0
-    if blocked
-      @sprite.visible = false
-      return
-    end
     notice = $game_temp.task_journal_notice
     if notice
       $game_temp.task_journal_notice = nil
       task = $game_party.tasks_info[notice[0]]
       if task && task.visible && $game_party.current_tasks.include?(task.id)
-        show(task, notice[1])
+        show
       end
     end
-    return if @frames <= 0
-    @frames -= 1
-    @sprite.opacity = [255,@frames*16].min
-    @sprite.visible = @frames > 0
+    case @phase
+    when :entering
+      @phase_frame += 1
+      duration = TaskJournal::POPUP_SLIDE_FRAMES
+      remaining = duration - @phase_frame
+      # 二次缓出：刚进入时移动快，靠近落点时逐渐放慢。
+      @sprite.x = @rest_x +
+        (@hidden_x - @rest_x) * remaining * remaining / (duration * duration)
+      if @phase_frame >= TaskJournal::POPUP_SLIDE_FRAMES
+        @sprite.x = @rest_x
+        @phase = :holding
+        @phase_frame = 0
+      end
+    when :holding
+      @phase_frame += 1
+      if @phase_frame >= TaskJournal::POPUP_FRAMES
+        @phase = :leaving
+        @phase_frame = 0
+      end
+    when :leaving
+      @phase_frame += 1
+      duration = TaskJournal::POPUP_SLIDE_FRAMES
+      # 二次缓入：起步慢，越接近屏幕右侧移动越快。
+      @sprite.x = @rest_x +
+        (@hidden_x - @rest_x) * @phase_frame * @phase_frame / (duration * duration)
+      @sprite.opacity = 255 * (duration - @phase_frame) / duration
+      if @phase_frame >= TaskJournal::POPUP_SLIDE_FRAMES
+        @sprite.x = @hidden_x
+        @sprite.visible = false
+        @phase = :idle
+      end
+    end
   end
 
-  def show(task, action)
+  def draw_notice
     b = @sprite.bitmap
     b.clear
-    b.fill_rect(0,0,330,114,Color.new(9,15,23,235))
-    b.fill_rect(0,0,3,114,TaskJournal.color(6))
-    b.font.size = 17; b.font.color = TaskJournal.color(6)
-    label = {:accepted => "任务已记录", :updated => "任务目标更新", :done => "任务已完成"}[action]
-    b.draw_text(14,6,300,25,TaskJournal::LABELS[task.category]+" · "+label)
-    b.font.size = 22; b.font.color = TaskJournal.color(0)
-    b.draw_text(14,34,300,29,task.mark+task.title)
-    b.font.size = 16; b.font.color = TaskJournal.color(7)
-    b.draw_text(14,72,300,24,"打开任务日志查看#{task.completed ? '完成报告' : '当前目标'}。")
-    @frames = TaskJournal::POPUP_FRAMES
-    @sprite.opacity = 255; @sprite.visible = true
+    b.blt(0, 0, @background, @background.rect)
+    b.blt(15, 20, @icon, @icon.rect)
+    b.font.size = 20
+    b.font.color = Color.new(0, 0, 0, 220)
+    b.draw_text(48, 16, @width - 57, 32, "更新了任务日志")
+    b.font.color = TaskJournal.color(0)
+    b.draw_text(47, 15, @width - 57, 32, "更新了任务日志")
+  end
+
+  def show
+    @sprite.x = @hidden_x
+    @sprite.opacity = 255
+    @sprite.visible = true
+    @phase = :entering
+    @phase_frame = 0
   end
 
   def dispose

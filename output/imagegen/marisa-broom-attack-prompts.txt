@@ -1,0 +1,36 @@
+Use case: identity-preserve.
+Edit target: the single attached Marisa RPG Maker XP sprite sheet shown at2x nearest-neighbor viewing scale. Logical canvas256x256, 4x4 grid of64x64cells. Original32x48 artwork was centered with16pxsidepadding and16pxtoppadding, never enlarged. This is the exact character identity AND native size reference.
+
+Primary request: create a COMPLETE four-frame TWO-HANDED BROOM HORIZONTAL SWEEP ATTACK in all FOUR directions, facing down/front, left, right, up/back. This is a grounded melee broom attack, not running or flying. Both hands firmly grip the same wooden broom shaft through all16frames. Show coordinated arm, torso and planted-foot rotation, with modest hair/dress/hat follow-through.
+
+All FOUR columns are attack poses (no protected standing columns for this request):
+1 WIND-UP: brace feet, turn torso slightly, draw broom back at waist height ready to swing.
+2 SWING START: initiate torso turn and carry the broom into the sweep, both elbows/hands coordinated.
+3 FULL HORIZONTAL SWEEP: clear most extended sweeping contact pose, broom bristles reaching across/in front of the attack direction, shaft mostly horizontal across waist level; feet remain planted, torso follows the swing.
+4 FOLLOW-THROUGH/RECOVERY: broom passes through to the other side, body settles, still holding broom with both hands, ready to return to wind-up.
+The sequence must READ as an attacking horizontal sweep, not four idle holding poses. The wooden shaft rotates/changes projected angle naturally with the attack; brush stays attached, same actual broom size throughout.
+
+Four direction rows: row1 down/front, row2 left, row3 right, row4 up/back. Face/body mostly retain each row's designated orientation. In side rows the brush reaches in front of the facing direction at the main attack frame; do not point the main strike behind the attacker. In front/back rows, use a visibly lateral waist-high arc with appropriate broom/body occlusion; in back view the hands/shaft may be partly hidden by torso but the broom ends and bristles remain legible. No whole-character mirroring that reverses identity details.
+
+Broom design: one ordinary wooden broom, medium brown slender shaft about2nativepixels thick, warm yellow/tan straw bundle at ONE end, tapered near the binding and spreading at the tip, tiny brown binding. Total logical broom length about46-52pixels including a roughly12pixel-long straw bundle, proportionate to the original46pixel-tall character. Keep the broom complete inside every64x64cell with transparent margins. No extra broom, magic beam, sparkles, motion trails, glow, text or hit effects.
+
+Character invariants: same blonde hair/bangs and original hair length; same original wide-brim pointed dark witch hat with pale/pink bow and trim; same dark/black-purple dress, pale pink-white apron/front and sleeve details, original small shoes, face/eye/skin colors and neutral expression. No costume redesign, new props besides the requested broom, flying stance or running legs.
+
+Critical native scale: source character about46px tall from hat-tip to shoes and31px wide including hat brim. Keep source head/hat width, torso, hands, feet and pixel density. NEVER enlarge the person to fill64pxcells.256x256 is extra empty weapon space only. Stable head/body anchor aboutlocalx32, shoes aroundlocaly61; slight weight shifts and torso rotation are allowed while retaining source anatomy dimensions. One logical pixel=2displaypixels in the reference.
+
+Layout: exactly16 complete frames,4columns x4rows, all64x64cells. Same character, same broom, coherent attack stages in every direction. Complete hats, limbs, shafts and bristles within cells, no clipping or inter-frame overlaps.
+
+Style: authentic tiny RPG Maker XP pixel sprites, crisp hard pixel clusters and original limited palette/shading; broom uses a few matching brown/tan/straw colors. Organic first-version animation treatment. Actual transparent background. No black/white/magenta fill, borders, labels, gridlines, antialiasing, blur, smooth modern illustration, gradients or outside shadows. Output one square sprite sheet only.
+
+TRANSPARENCY AND SWEEP REFINEMENT:
+Edit the last attached four-direction Marisa broom-attack sprite sheet.
+Critical correction1: REMOVE the entire painted gray-white checkerboard backdrop and return a genuinely TRANSPARENT PNG alpha channel. The checkerboard is not part of the sprites. Preserve opaque white apron, pale sleeve/bow trim, gray shoes and all character/broom pixels; do not erase light sprite details. No fake checkerboard or solid-color replacement.
+
+Critical correction2: make three targeted attack poses follow a coherent horizontal sweep:
+- ROW1 COLUMN1 (front WIND-UP): move the broom's straw-bristle head to screenRIGHT behind/along her right side at waist height, wooden handle extending toward screenLEFT. BOTH hands hold shaft close to waist. Same character size, turn torso only slightly to wind up. This leads into existing row1col2 where broom head is also on screenRIGHT.
+- ROW1 COLUMN4 (front FOLLOW-THROUGH): the broom has just swept from screenRIGHT to screenLEFT at the existing row1col3. Keep its STRAW HEAD on screenLEFT now, slightly lower at waist/hip height, settling into recovery with both hands still gripping the shaft. It must not immediately jump back to screenRIGHT.
+- ROW4 COLUMN1 (back WIND-UP): straw head starts on screenLEFT, shaft extends toward screenRIGHT, both hands hold it in front of the torso with appropriate back-view occlusion. This precedes existing row4col2 with straw head on screenLEFT and row4col3 main sweep with straw head on screenRIGHT.
+
+Keep the other13pose cells unchanged apart from background removal. Maintain same tiny Marisa, black-purple witch hat and bow, blonde hair, source clothes/face, gray shoes and identical broom design. Keep both hands gripping in all frames; never create extra brooms or floating shafts. Grounded horizontal sweep attack, not running or flying.
+Exact4x4layout, logical256x256sheet,64x64cells. Original native character stays about46px tall and31pxwide including hat, stable feet near localy61. Canvas is weapon room only, do not upscale anatomy. Broom and full character stay inside eachcell.
+Crisp authentic RPG Maker XP pixel style and original limited shading/colors with brown wood/tan straw, no antialiasing, gradients, blur, swish effects, text, borders or grid lines. Return full sheet with TRUE transparent background.

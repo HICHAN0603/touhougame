@@ -1,0 +1,14 @@
+生成方式：内置 image_gen；四张用户参考图用于匹配视觉风格。
+用途：Scene_Task 的任务界面底图。分类、任务标题、正文和提示由游戏脚本绘制。
+布局：上方三个分类区域；左侧任务列表；右侧详情；底部操作说明。
+接入状态（2026-09-28）：已用于新的 Scene_Task 脚本，环形菜单已切换入口。原 Scene_Task.png 保留；游戏使用 Scene_Task_v2.png，在运行时按640×480显示。
+
+Final prompt:
+Use case: ui-mockup / production game UI background asset.
+Create a new task journal UI background derived from the visual language of the four supplied RPG Maker XP interface images. All four input images are STYLE REFERENCES, not layouts to copy. Preserve their dark navy-black damask textile texture, finely engraved silver botanical/feather filigree frames, subtle aged brass clockwork gears, celestial star charts and astrolabe arcs. No characters, no landscape, no lettering, no numbers, no symbols used as text, no watermark.
+Output: one flat front-facing 4:3 image, preferably exactly 640 x 480 pixels. Every outer edge is straight and the full rectangular frame touches the canvas bounds. It is a usable 2D interface texture, not a screenshot of a monitor, not a tilted mockup. No exterior margin or extra background outside the frame.
+Layout in a 640 x 480 coordinate system:
+1. Top navigation from y=0 to y=58: three equally sized empty compartments, separated by thin silver vertical dividers at x=213 and x=426. These compartments will receive the Main / Side / Special task labels in engine code. All three must remain equally neutral, without a permanently selected tab.
+2. Main content from y=62 to y=421: a left task-list pane from x=0 to x=218, and a broad right task-details pane from x=222 to x=640. A precise thin silver divider at x=220 separates the panes. Keep the central text area of each pane quiet, near-black, low contrast and empty. No fixed horizontal ruled lines in these panes, because the game will wrap text dynamically. The right pane must not be subdivided further.
+3. Bottom help bar from y=425 to y=480: one uninterrupted empty horizontal panel, separated from content by a thin silver frame. This is for runtime controls/help text.
+Match the references' material, palette, ornament density, and ornate fantasy JRPG aesthetic closely. Arrange dense metal flower/gear ornaments along the outer corners and far edges, with restrained clockwork decoration in the lower left and upper right. Fine low-contrast astrolabe markings may decorate the empty panel backgrounds but must remain far dimmer than the frame. Keep decorations clear of usable text regions. No glowing neon, no bright blue filled buttons, no portraits, no progress meters, no baked-in text. Sharp silver borders and subdued warm-brass accents should read cleanly at 640x480. The final artifact is a blank reusable game interface background with exactly three tabs, two content panes, and one bottom bar.

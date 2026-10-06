@@ -1,0 +1,569 @@
+  #--------------------------------------------------------------------------
+  # 任务资料区：名称、简介、完成和过期条件都在这里维护。
+  # 注意：get_task 的编号是这里的数组下标，不是变量编号。
+  #--------------------------------------------------------------------------
+  def get_tasks_info
+    @tasks_info = []
+
+    # 所有任务都在这里定义；三类使用同样的字段、同样的 Game_Task.new。
+    # 分类：:main 主线（○/●），:side 支线（△/▲），:special 特殊（☆/★）。
+    # 编号唯一即可，可以按剧情顺序自由排列，不需要额外的任务资料表。
+    # 本批主线只在5、10、15……节点变化，区间内目标和说明保持不变。
+
+    #--------------------------------------------------------------------
+    # 任务01：突来的通缉｜变量15达到5时接受，达到10时完成
+    #--------------------------------------------------------------------
+    id          = 1  # 任务编号：事件中调用 get_task(1)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "突来的通缉"  # 任务标题
+    description = "蘑菇还没采够，红魔的拘捕令先找上了门。罪名越看越像现编的，门外的警察却是真的。"  # 剧情说明
+    objective   = "应付堵在魔法店门口的红魔警察，别真被带走。"  # 当前目标：整个5点区间保持一致
+    report      = "击退警察后，魔理沙和爱丽丝决定去香霖堂问问：这张通缉令究竟怎么回事。"  # 完成报告
+    completed   = $game_variables[15] >= 10  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务02：前往香霖堂｜变量15达到10时接受，达到15时完成
+    #--------------------------------------------------------------------
+    id          = 2  # 任务编号：事件中调用 get_task(2)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "前往香霖堂"  # 任务标题
+    description = "霖之助或许知道雅罗最近出了什么事。去香霖堂之前，也可以先到爱丽丝家拿些补给。"  # 剧情说明
+    objective   = "穿过魔法森林，到香霖堂找霖之助。"  # 当前目标：整个5点区间保持一致
+    report      = "霖之助说红魔加强了戒备。既然白天不好进，两人决定趁夜去红魔馆问个明白。"  # 完成报告
+    completed   = $game_variables[15] >= 20  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务04：夜赴红魔｜变量15达到20时接受，达到25时完成
+    #--------------------------------------------------------------------
+    id          = 3  # 任务编号：事件中调用 get_task(4)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "夜赴红魔"  # 任务标题
+    description = "红魔馆忽然守得更严，蕾米莉亚却连个说法都没有。先赶到雅罗边境，今晚还长着呢。"  # 剧情说明
+    objective   = "离开香霖堂，沿魔法森林的路前往雅罗边境。"  # 当前目标：整个5点区间保持一致
+    report      = "在路上帮梦美收拾了实验招来的妖怪，也弄清了这位天界学者的来历。"  # 完成报告
+    completed   = $game_variables[15] >= 25  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+
+    #--------------------------------------------------------------------
+    # 任务06：红魔馆门前｜变量15达到30时接受，达到35时完成
+    #--------------------------------------------------------------------
+    id          = 4  # 任务编号：事件中调用 get_task(6)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "红魔馆门前"  # 任务标题
+    description = "魔理沙熟悉的偷书路线，第一关偏偏是个没打瞌睡的门卫。看来这回得先从正门讲点道理。"  # 剧情说明
+    objective   = "与爱丽丝一起突破红美铃的阻拦。"  # 当前目标：整个5点区间保持一致
+    report      = "击退美铃后，警报还是响了。两人只好放弃熟路，改走地下水路。"  # 完成报告
+    completed   = $game_variables[15] >= 35  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务07：地下水路｜变量15达到35时接受，达到40时完成
+    #--------------------------------------------------------------------
+    id          = 5  # 任务编号：事件中调用 get_task(7)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "地下水路"  # 任务标题
+    description = "通向图书馆的地下水路，魔理沙本以为闭着眼都能走。希望那些偷书经验这次也能派上用场。"  # 剧情说明
+    objective   = "沿地下水路前进，找到通往大图书馆的出口。"  # 当前目标：整个5点区间保持一致
+    report      = "沿地下水路潜入后，两人在地牢醒来。幸好芙兰伸出援手，牢门终于打开。"  # 完成报告
+    completed   = $game_variables[15] >= 45  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务08：地牢醒来｜变量15达到40时接受，达到45时完成
+    #--------------------------------------------------------------------
+    id          = 6  # 任务编号：事件中调用 get_task(8)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "地牢醒来"  # 任务标题
+    description = "偷偷潜入的人反而在地牢醒来。先弄清爱丽丝有没有事，再想办法出去。"  # 剧情说明
+    objective   = "在地牢确认自己与爱丽丝的处境，寻找脱身办法。"  # 当前目标：整个5点区间保持一致
+    report      = "魔理沙确认了爱丽丝的处境，也遇见了愿意打开牢门的芙兰。"  # 完成报告
+    completed   = $game_variables[15] >= 45  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务09：离开地牢｜变量15达到45时接受，达到50时完成
+    #--------------------------------------------------------------------
+    id          = 7  # 任务编号：事件中调用 get_task(9)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "离开地牢"  # 任务标题
+    description = "牢门是芙兰开的，她还非要跟来。既然人都凑齐了，就去找帕秋莉和蕾米把通缉的事说清楚。"  # 剧情说明
+    objective   = "带上爱丽丝和芙兰，离开地牢，前往大图书馆。"  # 当前目标：整个5点区间保持一致
+    report      = "几人在谒见之间与蕾米起了冲突。她终于同意换个地方，把正事谈清楚。"  # 完成报告
+    completed   = $game_variables[15] >= 50  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+      
+    #--------------------------------------------------------------------
+    # 任务11：私人会面｜变量15达到55时接受，达到60时完成
+    #--------------------------------------------------------------------
+    id          = 8  # 任务编号：事件中调用 get_task(11)
+    category    = :main  # 任务分类
+    chapter     = "序章"  # 所属章节
+    name        = "私人会面"  # 任务标题
+    description = "打也打过了，蕾米总算肯私下说明来意。爱丽丝决定一起去听听：那张通缉令到底是抓人，还是请人？"  # 剧情说明
+    objective   = "离开谒见间，先右拐再左拐，去蕾米莉亚的房间。"  # 当前目标：整个5点区间保持一致
+    report      = "蕾米交出折扇，委托寻找五件天仪，还说魔理沙的父亲仍然活着。"  # 完成报告
+    completed   = $game_variables[15] >= 60  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务12：等待来信｜变量15达到60时接受，达到65时完成
+    #--------------------------------------------------------------------
+    id          = 9  # 任务编号：事件中调用 get_task(12)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "等待来信"  # 任务标题
+    description = "五件天仪、父亲的消息，还有一把来历不明的折扇。蕾米一下给出的谜题够多，先在香霖堂喘口气。"  # 剧情说明
+    objective   = "在香霖堂休整，研究折扇，等红魔馆送来消息。"  # 当前目标：整个5点区间保持一致
+    report      = "折扇暂时没给出答案，红魔馆的来信倒先到了：第一件天仪的线索在冥界。"  # 完成报告
+    completed   = $game_variables[15] >= 65  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务13：再访红魔馆｜变量15达到65时接受，达到70时完成
+    #--------------------------------------------------------------------
+    id          = 10  # 任务编号：事件中调用 get_task(13)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "再访红魔馆"  # 任务标题
+    description = "冥界不是说去就能去的地方。补给准备好后，再问问蕾米这趟委托到底要怎么出海。"  # 剧情说明
+    objective   = "前往红魔馆谒见之间，与蕾米莉亚商量出海安排。"  # 当前目标：整个5点区间保持一致
+    report      = "出海的安排已经谈妥，帕秋莉也加入了队伍。看来这趟旅行不会太清静。"  # 完成报告
+    completed   = $game_variables[15] >= 70  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务14：工坊与港口｜变量15达到70时接受，达到75时完成
+    #--------------------------------------------------------------------
+    id          = 11  # 任务编号：事件中调用 get_task(14)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "工坊与港口"  # 任务标题
+    description = "帕秋莉加入队伍，还教了三人阵法。出海之前，得先去雅罗中区的机甲工坊。"  # 剧情说明
+    objective   = "先前往雅罗中区的机甲工坊，再到南部港口。"  # 当前目标：整个5点区间保持一致
+    report      = "一行人经过机甲工坊来到南部港口，敲定了出海安排。"  # 完成报告
+    completed   = $game_variables[15] >= 75  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务15：出海准备｜变量15达到75时接受，达到80时完成
+    #--------------------------------------------------------------------
+    id          = 12  # 任务编号：事件中调用 get_task(15)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "出海准备"  # 任务标题
+    description = "港口那边已经谈妥。冥界隔着一整片海，可不是备上点心就能出发的春游。"  # 剧情说明
+    objective   = "备好装备和补给，从港口启程前往冥界。"  # 当前目标：整个5点区间保持一致
+    report      = "船离开了港口。几人刚在船上歇了一会儿，突如其来的袭击就打断了航程。"  # 完成报告
+    completed   = $game_variables[15] >= 80  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务17：夺取方舟｜变量15达到85时接受，达到90时完成
+    #--------------------------------------------------------------------
+    id          = 13  # 任务编号：事件中调用 get_task(17)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "夺取方舟"  # 任务标题
+    description = "海盗的诺亚方舟挡在航线上，却也正好能载人继续渡海。想借船？先过船长这一关。"  # 剧情说明
+    objective   = "穿过诺亚方舟的防线，到主控室击败船长。"  # 当前目标：整个5点区间保持一致
+    report      = "突破海盗防线、击败船长。诺亚方舟换了主人，渡海的路也重新有了着落。"  # 完成报告
+    completed   = $game_variables[15] >= 90  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务18：继续航行｜变量15达到90时接受，达到95时完成
+    #--------------------------------------------------------------------
+    id          = 14  # 任务编号：事件中调用 get_task(18)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "继续航行"  # 任务标题
+    description = "船长打倒了，诺亚方舟也到手了。接下来得有人掌舵——更麻烦的是，这艘船居然没有导航。"  # 剧情说明
+    objective   = "乘诺亚方舟继续渡海，前往冥界。"  # 当前目标：整个5点区间保持一致
+    report      = "众人接着航行，妖梦也同行，最后在万苍港靠岸。"  # 完成报告
+    completed   = $game_variables[15] >= 95  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务19：万苍登陆｜变量15达到95时接受，达到100时完成
+    #--------------------------------------------------------------------
+    id          = 15  # 任务编号：事件中调用 get_task(19)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "万苍登陆"  # 任务标题
+    description = "脚终于踩在陆地上。妖梦正要回白玉楼，小恶魔留下看船，其余人还得继续赶路。"  # 剧情说明
+    objective   = "从万苍港去往冥界入口，穿过边界。"  # 当前目标：整个5点区间保持一致
+    report      = "在冥界入口碰上骚灵三姐妹。一番交手后，众人终于穿过边界。"  # 完成报告
+    completed   = $game_variables[15] >= 100  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务23：冥界宿屋｜变量15达到115时接受，达到120时完成
+    #--------------------------------------------------------------------
+    id          = 16  # 任务编号：事件中调用 get_task(23)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "抵达白楼"  # 任务标题
+    description = "到了白玉楼，帕秋莉说先找地方休息、检查术式。至于宿屋有没有四星，至少不是今晚最要紧的事。"  # 剧情说明
+    objective   = "在白玉楼城区找宿屋住下，研究折扇。"  # 当前目标：整个5点区间保持一致
+    report      = "众人在宿屋研究折扇，决定第二天向北去见幽幽子。"  # 完成报告
+    completed   = $game_variables[15] >= 120  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+    @tasks_info[id].migration = [15, 115]  # 旧存档补录条件
+
+    #--------------------------------------------------------------------
+    # 任务24：向北寻访｜变量15达到120时接受，达到125时完成
+    #--------------------------------------------------------------------
+    id          = 17  # 任务编号：事件中调用 get_task(24)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "向北寻访"  # 任务标题
+    description = "越往北走，折扇的反应越明显，却仍不肯给出答案。既然它指着白玉楼，就先去问问主人。"  # 剧情说明
+    objective   = "从宿屋向北，前往幽幽子的居所。"  # 当前目标：整个5点区间保持一致
+    report      = "通过入口的拦阻、说明来意后，妖梦终于同意陪众人登楼。"  # 完成报告
+    completed   = $game_variables[15] >= 125  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务25：庭师的引路｜变量15达到125时接受，达到130时完成
+    #--------------------------------------------------------------------
+    id          = 18  # 任务编号：事件中调用 get_task(25)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "庭师的引路"  # 任务标题
+    description = "妖梦答应再帮一次忙，但也没打算让外来客在白玉楼随便乱走。有庭师带路，至少不会迷路。"  # 剧情说明
+    objective   = "跟随妖梦登上白玉楼的阶梯。"  # 当前目标：整个5点区间保持一致
+    report      = "在妖梦陪同下登上阶梯，白玉楼的主人已经等在那里。"  # 完成报告
+    completed   = $game_variables[15] >= 130  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务26：拜访幽幽子｜变量15达到130时接受，达到135时完成
+    #--------------------------------------------------------------------
+    id          = 19  # 任务编号：事件中调用 get_task(26)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "拜访幽幽子"  # 任务标题
+    description = "幽幽子好像早知道她们会来。金之天仪的下落，还得从这位最会把正事聊成谜语的主人口中问。"  # 剧情说明
+    objective   = "去幽幽子的房间，当面问清金之天仪在哪里。"  # 当前目标：整个5点区间保持一致
+    report      = "幽幽子没有交出天仪的答案，倒先邀请众人留下吃饭。至少这一件事她说得很明白。"  # 完成报告
+    completed   = $game_variables[15] >= 135  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务27：饭前散步｜变量15达到135时接受，达到140时完成
+    #--------------------------------------------------------------------
+    id          = 20  # 任务编号：事件中调用 get_task(27)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "饭前散步"  # 任务标题
+    description = "饭还没上桌，天仪的答案也还没到手。趁等席的工夫，在白玉楼庭院看看。"  # 剧情说明
+    objective   = "在白玉楼庭院走走，留意与天仪有关的线索。"  # 当前目标：整个5点区间保持一致
+    report      = "众人在西行妖旁听妖梦谈起妖忌的往事，随后得知宴席已经备好。"  # 完成报告
+    completed   = $game_variables[15] >= 140  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+
+    #--------------------------------------------------------------------
+    # 任务30：庭师的旅程｜变量15达到150时接受，达到155时完成
+    #--------------------------------------------------------------------
+    id          = 21  # 任务编号：事件中调用 get_task(30)
+    category    = :main  # 任务分类
+    chapter     = "第一章"  # 所属章节
+    name        = "庭师的旅程"  # 任务标题
+    description = "妖忌留下的剑就是金之天仪，可妖梦现在还拔不出来。她决定同行，看来找天仪还得等这位庭师练成。"  # 剧情说明
+    objective   = "带妖梦离开白玉楼，返回现世。"  # 当前目标：整个5点区间保持一致
+    report      = "众人带妖梦返回现世，帕秋莉负责向红魔馆汇报。那把剑暂时仍拔不出来。"  # 完成报告
+    completed   = $game_variables[15] >= 155  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+
+    #--------------------------------------------------------------------
+    # 任务33：接受调查｜变量15达到165时接受，达到170时完成
+    #--------------------------------------------------------------------
+    id          = 22  # 任务编号：事件中调用 get_task(33)
+    category    = :main  # 任务分类
+    chapter     = "第二章"  # 所属章节
+    name        = "接受调查"  # 任务标题
+    description = "刚从冥界回来，一行人又被拉进凶案调查。先弄清案情，别连现场在哪儿都不知道就开始推理。"  # 剧情说明
+    objective   = "到红魔警署二楼，和四季映姬、小町商议查案。"  # 当前目标：整个5点区间保持一致
+    report      = "在警署与映姬、小町谈妥分工：现场、证词、档案三路都要查。"  # 完成报告
+    completed   = $game_variables[15] >= 170  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+
+    #--------------------------------------------------------------------
+    # 任务34：三路取证｜变量15达到170时接受，达到175时完成
+    #--------------------------------------------------------------------
+    id          = 23  # 任务编号：事件中调用 get_task(34)
+    category    = :main  # 任务分类
+    chapter     = "第二章"  # 所属章节
+    name        = "三路取证"  # 任务标题
+    description = "遗体在雅罗东部被发现，大教堂附近或许有人见过异常。先查现场，再看证词能不能对得上。"  # 剧情说明
+    objective   = "调查遗体发现处、询问目击者，并查阅警署档案。"  # 当前目标：整个5点区间保持一致
+    report      = "遗体发现处并非第一案发地点。接下来要弄清凶手怎样搬运尸体。"  # 完成报告
+    completed   = $game_variables[15] >= 175  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+    @tasks_info[id].migration = [15, 170]  # 旧存档补录条件
+
+    #--------------------------------------------------------------------
+    # 任务35：追查搬运｜变量15达到175时接受，达到180时完成
+    #--------------------------------------------------------------------
+    id          = 24  # 任务编号：事件中调用 get_task(35)
+    category    = :main  # 任务分类
+    chapter     = "第二章"  # 所属章节
+    name        = "追查搬运"  # 任务标题
+    description = "发现遗体的地方不是凶案现场。拖拽痕迹只有一段，凶手难道会扛着尸体走完剩下的路？"  # 剧情说明
+    objective   = "检查雅罗东部的可疑地点，继续核对证词和档案。"  # 当前目标：整个5点区间保持一致
+    report      = "现场、证词与档案已经整理过一遍。尸体是怎样被运来的，还差关键的一步。"  # 完成报告
+    completed   = $game_variables[15] >= 180  # 变量完成条件
+    completed ||= (@task_manual_completed || {})[id] == true  # 支持手动完成
+
+    briefing = "\\c[9]剧情说明\\c[0]\n#{description}\n\n"
+    if completed
+      briefing += "\\c[6]完成报告\\c[0]\n#{report}"
+    else
+      briefing += "\\c[6]当前目标\\c[0]\n#{objective}"
+    end
+
+    @tasks_info[id] = Game_Task.new(
+      name, briefing, nil, category, completed, chapter, [15])
+    @tasks_info[id].migration = [15, 175]  # 旧存档补录条件

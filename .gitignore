@@ -1,7 +1,6 @@
-# Temporary editor output and local game saves
+# Temporary editor output
 /~TEMP/
-/Save/
-/Save*.rxdata
+/output/
 
 # Windows-generated files
 Thumbs.db

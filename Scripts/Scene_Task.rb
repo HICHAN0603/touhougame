@@ -1271,15 +1271,15 @@ class Scene_Task
 
   def create_ui
     @background = Sprite.new
-    @background.z = 80
+    @background.z = TouhouMenuLayers::TASK_BASE + 80
     @background.bitmap = Bitmap.new(640, 480)
     source = RPG::Cache.windowskin(TaskJournal::BACKGROUND)
     @background.bitmap.stretch_blt(Rect.new(0,0,640,480), source, source.rect)
     @overlay = Sprite.new
-    @overlay.z = 103
+    @overlay.z = TouhouMenuLayers::TASK_BASE + 103
     @overlay.bitmap = Bitmap.new(640,480)
     @detail_viewport = Viewport.new(248,145,364,252)
-    @detail_viewport.z = 104
+    @detail_viewport.z = TouhouMenuLayers::TASK_BASE + 104
     @detail = Sprite.new(@detail_viewport)
   end
 

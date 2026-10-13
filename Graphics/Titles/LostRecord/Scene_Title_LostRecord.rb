@@ -3,9 +3,18 @@
 module LostRecordTitle
   ROOT = 'Graphics/Titles/LostRecord/'
   POSITIONS = [[150,359], [263,350], [376,350], [489,359]]
+  GLOW_ENABLED = true
+  GLOW_PERIOD = 4.0
+  GLOW_HALO_DELAY = 0.22
+  GLOW_SHADE_OPACITY = 30
+  GLOW_CORE_MIN = 6
+  GLOW_CORE_GAIN = 24
+  GLOW_HALO_MIN = 2
+  GLOW_HALO_GAIN = 18
+  GLOW_HALO_EXPAND = 0.018
   def self.save_available?
     if defined?(BBS_66RPG_DIR)
-      return (0..9).any? { |i| FileTest.exist?(BBS_66RPG_DIR + "Save#{i}.rxdata") }
+      return (0...SaveLoadOrnate::SLOT_COUNT).any? { |i| FileTest.exist?(BBS_66RPG_DIR + "Save#{i}.rxdata") }
     end
     (1..4).any? { |i| FileTest.exist?("Save#{i}.rxdata") }
   end
@@ -32,6 +41,7 @@ class Scene_Title
       @continue_enabled = LostRecordTitle.save_available?
       @lr_index = @continue_enabled ? 1 : 0
       @lr_tick = 0
+      @lr_glow_elapsed = 0.0
       lr_build
       $game_system.bgm_play($data_system.title_bgm)
       Audio.me_stop
@@ -88,27 +98,29 @@ class Scene_Title
   end
 
   def lr_build
-    lr_sprite('background', 0, 0, 0)
+    @lr_background = lr_sprite('background', 0, 0, 0)
+    lr_build_glow
     @lr_particles = []
     18.times do |i|
-      s = lr_sprite('spark', 190 + rand(420), rand(430), 1, true)
+      s = lr_sprite('spark', 190 + rand(420), rand(430), 4, true)
       s.zoom_x = s.zoom_y = 0.15 + rand(30) / 100.0
       @lr_particles << s
     end
-    @lr_logo = lr_sprite('logo', 178, 77, 3)
-    @lr_ornament = lr_sprite('ornament', 0, 0, 2)
+    @lr_logo = lr_sprite('logo', 178, 77, 6)
+    @lr_ornament = lr_sprite('ornament', 0, 0, 5)
     @lr_buttons, @lr_glyphs, @lr_labels = [], [], []
     LostRecordTitle::POSITIONS.each_with_index do |p, i|
-      @lr_buttons << lr_sprite('button-normal', p[0], p[1], 4, true)
-      @lr_glyphs << lr_sprite("glyph-#{i}", p[0], p[1], 5, true)
-      @lr_labels << lr_sprite("label-#{i}", p[0], p[1] + 59, 5, true)
+      @lr_buttons << lr_sprite('button-normal', p[0], p[1], 7, true)
+      @lr_glyphs << lr_sprite("glyph-#{i}", p[0], p[1], 8, true)
+      @lr_labels << lr_sprite("label-#{i}", p[0], p[1] + 59, 8, true)
     end
-    @lr_pointer = lr_sprite('spark', 0, 0, 6, true)
+    @lr_pointer = lr_sprite('spark', 0, 0, 9, true)
     lr_animate
   end
 
   def update
     @lr_tick += 1
+    @lr_glow_elapsed += 1.0 / [Graphics.frame_rate, 1].max
     if Input.repeat?(Input::RIGHT) || Input.repeat?(Input::DOWN)
       @lr_index = (@lr_index + 1) % 4
       $game_system.se_play($data_system.cursor_se)
@@ -132,6 +144,7 @@ class Scene_Title
   end
 
   def lr_animate
+    lr_animate_glow
     @lr_logo.opacity = [@lr_tick * 8, 255].min
     @lr_logo.y = 77 + [10 - @lr_tick / 3, 0].max
     fade = [[(@lr_tick - 8) * 12, 0].max, 255].min
@@ -159,7 +172,82 @@ class Scene_Title
     @lr_particles.each_with_index do |s, i|
       s.y -= 0.12 + (i % 4) * 0.04
       s.y = 430 if s.y < 20
-      s.opacity = 35 + (Math.sin(@lr_tick / 30.0 + i) + 1) * 45
+      opacity = 35 + (Math.sin(@lr_tick / 30.0 + i) + 1) * 45
+      if @lr_glow_mask
+        weight = @lr_glow_mask.get_pixel(s.x.to_i, s.y.to_i).alpha / 255.0
+        opacity += 18 * @lr_glow_pulse * weight
+      end
+      s.opacity = opacity.to_i
     end
+  end
+
+  def lr_build_glow
+    @lr_glow_pulse = 0.0
+    return unless LostRecordTitle::GLOW_ENABLED
+
+    # Build a local shade once: pure white needs room to become brighter.
+    background = @lr_background.bitmap
+    @lr_glow_mask = Bitmap.new(background.width, background.height)
+    @lr_bitmaps['title-glow-shade'] = @lr_glow_mask
+    shade = Color.new(6, 12, 24, 0)
+    background.height.times do |y|
+      (140...background.width).each do |x|
+        pixel = background.get_pixel(x, y)
+        brightness = [pixel.red, pixel.green, pixel.blue].min
+        next if brightness <= 215
+        shade.alpha = ((brightness - 215) * 255.0 / 40.0).to_i
+        @lr_glow_mask.set_pixel(x, y, shade)
+      end
+    end
+    @lr_glow_shade = Sprite.new
+    @lr_sprites << @lr_glow_shade
+    @lr_glow_shade.bitmap = @lr_glow_mask
+    @lr_glow_shade.z = 1
+
+    @lr_glow_core = lr_glow_sprite('title-glow-core-v1', 2)
+    @lr_glow_halo = lr_glow_sprite('title-glow-halo-v1', 3)
+    @lr_glow_halo_zoom = [@lr_glow_halo.zoom_x, @lr_glow_halo.zoom_y]
+  end
+
+  def lr_glow_sprite(name, z)
+    # Keep the whole 4:3 overlay aligned; expand around the white opening.
+    sprite = lr_sprite(name, 400, 220, z)
+    sprite.ox = (sprite.bitmap.width * 400.0 / 640).round
+    sprite.oy = (sprite.bitmap.height * 220.0 / 480).round
+    sprite.zoom_x = 640.0 / sprite.bitmap.width
+    sprite.zoom_y = 480.0 / sprite.bitmap.height
+    sprite.blend_type = 1
+    sprite.opacity = 0
+    sprite
+  end
+
+  def lr_glow_wave(seconds)
+    phase = (seconds % LostRecordTitle::GLOW_PERIOD) / LostRecordTitle::GLOW_PERIOD
+    if phase < 0.30
+      level = phase / 0.30
+    elsif phase < 0.36
+      level = 1.0
+    elsif phase < 0.90
+      level = 1.0 - (phase - 0.36) / 0.54
+    else
+      level = 0.0
+    end
+    level * level * (3.0 - 2.0 * level)
+  end
+
+  def lr_animate_glow
+    return unless @lr_glow_core
+    intro = [@lr_glow_elapsed / 0.8, 1.0].min
+    core = lr_glow_wave(@lr_glow_elapsed)
+    halo = lr_glow_wave(@lr_glow_elapsed - LostRecordTitle::GLOW_HALO_DELAY)
+    @lr_glow_pulse = core * intro
+    @lr_glow_shade.opacity = (LostRecordTitle::GLOW_SHADE_OPACITY * intro).to_i
+    @lr_glow_core.opacity = ((LostRecordTitle::GLOW_CORE_MIN +
+      LostRecordTitle::GLOW_CORE_GAIN * core) * intro).to_i
+    @lr_glow_halo.opacity = ((LostRecordTitle::GLOW_HALO_MIN +
+      LostRecordTitle::GLOW_HALO_GAIN * halo) * intro).to_i
+    expansion = 1.0 + LostRecordTitle::GLOW_HALO_EXPAND * halo
+    @lr_glow_halo.zoom_x = @lr_glow_halo_zoom[0] * expansion
+    @lr_glow_halo.zoom_y = @lr_glow_halo_zoom[1] * expansion
   end
 end
